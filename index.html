@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1 id="timer"></h1>
+<div id="video-container"></div>
+
+<script>
+	let timer = 60 * 1000; // 1 minute
+    function addVideo() {
+        var videlem = document.createElement("video");
+        videlem.width = 320;
+        videlem.height = 240;
+        videlem.controls = true;
+        videlem.autoplay = true;
+		videlem.loop = true;
+        /// ... some setup like poster image, size, position etc. goes here...
+        /// now, add sources:
+        var sourceMP4 = document.createElement("source"); 
+        sourceMP4.type = "video/mp4";
+        sourceMP4.src = "video/gandalf-sax-guy.mp4";
+        videlem.appendChild(sourceMP4);
+
+        // Add to the parent element
+        document.getElementById("video-container").appendChild(videlem);
+    }
+	
+	function startTimeout() {
+		setTimeout(function() {
+			addVideo();
+			timer = timer - (timer / 10);
+			writeTimer();
+			startTimeout();
+		}, timer);
+	}
+	
+	function writeTimer() {
+		document.getElementById("timer").innerHTML = timer;
+	}
+	
+	startTimeout();
+	addVideo();
+	writeTimer();
+</script>
+</body>
+</html>
